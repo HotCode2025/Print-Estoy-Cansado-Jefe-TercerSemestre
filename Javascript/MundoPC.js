@@ -1,22 +1,28 @@
+// Clase base para dispositivos de entrada
 class DispotivoEntrada {
     constructor(tipoEntrada, marca) {
         this._tipoEntrada = tipoEntrada;
         this._marca = marca;
     }
+    // Getter para tipoEntrada
     get tipoEntrada() {
         return this._tipoEntrada;
-    }   
+    }
+    // Setter para tipoEntrada
     set tipoEntrada(tipoEntrada) {
         this._tipoEntrada = tipoEntrada;
     }
+    // Getter para marca
     get marca() {
         return this._marca;
     }
+    // Setter para marca
     set marca(marca) {
         this._marca = marca;
     }
 }
 
+// Clase para ratón, hereda de DispositivoEntrada
 class raton extends DispotivoEntrada {
     static contadorRatones = 0;
 
@@ -24,19 +30,23 @@ class raton extends DispotivoEntrada {
         super(tipoEntrada, marca);
         this._idRaton = ++raton.contadorRatones;
     }
+    // Getter para idRaton
     get idRaton() {
         return this._idRaton;
     }
+    // Método toString para representar el objeto
     toString() {
         return `Raton: [idRaton: ${this._idRaton}, tipoEntrada: ${this.tipoEntrada}, marca: ${this.marca}]`;
     }
 }
 
+// Creación de instancias de ratón
 let raton1 = new raton('USB', 'HP');
 console.log(raton1.toString());
 let raton2 = new raton('Bluetooth', 'Logitech');
 console.log(raton2.toString());
 
+// Clase para teclado, hereda de DispositivoEntrada
 class Teclado extends DispotivoEntrada {
     static contadorTeclados = 0;
 
@@ -44,19 +54,23 @@ class Teclado extends DispotivoEntrada {
         super(tipoEntrada, marca);
         this._idTeclado = ++Teclado.contadorTeclados;
     }
+    // Getter para idTeclado
     get idTeclado() {
         return this._idTeclado;
     }
+    // Método toString para representar el objeto (nota: nombre del método es topstring, probablemente un error tipográfico)
     topstring() {
         return `Teclado: [idTeclado: ${this._idTeclado}, tipoEntrada: ${this.tipoEntrada}, marca: ${this.marca}]`;
     }
 }
 
+// Creación de instancias de teclado
 let teclado1 = new Teclado('USB', 'Redragon');
 console.log(teclado1.topstring());
 let teclado2 = new Teclado('Bluetooth', 'Asus');
 console.log(teclado2.topstring());
 
+// Clase para monitor
 class Monitor {
     static contadorMonitores = 0;
 
@@ -65,19 +79,23 @@ class Monitor {
         this._marca = marca;
         this._tamanio = tamanio;
     }
+    // Getter para idMonitor
     get idMonitor(){
         return this._idMonitor;
     }
+    // Método toString para representar el objeto
     toString(){
-        return 'Monitor: [idMonitor: ${this._idMonitor}, marca: ${this._marca}, tamaño: ${this._tamanio}]';
+        return `Monitor: [idMonitor: ${this._idMonitor}, marca: ${this._marca}, tamaño: ${this._tamanio}]`;
     }
     
 }
+// Creación de instancias de monitor
 let monitor1 = new Monitor('HP', 15);
 let monitor2 = new Monitor('Dell', 27);
 console.log(monitor1.toString())
 console.log(monitor2.toString())
 
+// Clase para computadora, que agrupa monitor, ratón y teclado
 class Computadora {
     static contadorComputadoras = 0;
     constructor(nombre, monitor, raton, teclado){
@@ -87,16 +105,18 @@ class Computadora {
         this._raton = raton;
         this._teclado = teclado;
     }
+    // Método toString para representar la computadora y sus componentes
     toString(){
-    return 'Computadora ${this._idComputadora}: ${this._nombre}\n ${this._monitor}\n  ${this.raton}\n ${this._teclado}';
+    return `Computadora ${this._idComputadora}: ${this._nombre}\n ${this._monitor}\n  ${this._raton}\n ${this._teclado}`;
     }
 }
 
+// Creación de instancias de computadora
 let computadora1 = new Computadora('HP', monitor1, raton1, teclado1);
 console.log(computadora1.toString());
-console.log('${computadora1}');
+console.log(`${computadora1}`);
 let computadora2 = new Computadora('Aser', monitor2, raton2, teclado2);
-console.log('${computadora2}');
+console.log(`${computadora2}`);
 
 class Orden {
     static contadorOrdenes = 0;
