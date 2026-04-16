@@ -8,5 +8,8 @@ public class TestBloqueInicializacion {
 
         // Mostramos el estado final tras inicializar
         System.out.println("persona1 = " + persona1);
+
+        Persona persona2 = new Persona();
+        System.out.println("persona2 = " + persona2);        
     }
 }
