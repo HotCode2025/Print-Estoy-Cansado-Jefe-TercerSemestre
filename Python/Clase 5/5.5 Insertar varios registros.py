@@ -5,12 +5,15 @@ try:
     with conexion:
         with conexion.cursor() as cursor:
             sentencia = 'INSERT INTO persona (nombre, apellido, email)VALUES (%s, %s, %s)'
-            valores = ('Laura', 'Barros', 'Lbarros@mail.com')
-            cursor.execute(sentencia, valores)
+            valores = (
+                ('Laura', 'Barros', 'Lbarros@mail.com')
+                ('Marcos', 'Veloz', 'Mveloz@mail.com')
+                ('Merlin', 'Carracedo', 'Mcarracedo@mail.com')
+                )
+            cursor.executemany(sentencia, valores)
             registros_insertados = cursor.rowcount
             print(f'Los registros insertados son: {registros_insertados}')
 except Exception as e:
     print(f'Ocurrio un error: {e}')
 finally:
     conexion.close()
-    
