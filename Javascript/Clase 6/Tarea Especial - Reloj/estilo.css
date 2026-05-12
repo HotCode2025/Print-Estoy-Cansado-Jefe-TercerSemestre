@@ -1,0 +1,80 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a1a; /* Fondo por defecto */
+    background-size: cover;
+    background-position: center;
+    transition: background 1s ease-in-out; /* Transición suave de fondo */
+    font-family: 'Orbitron', sans-serif;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo para que el reloj brille */
+    z-index: 1;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 60px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px); /* Efecto de desenfoque */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+.reloj {
+    font-size: 80px;
+    font-weight: 700;
+    color: #00ffcc; /* Color Neón */
+    text-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+    display: inline-block;    
+    min-width: 520px;         
+    text-align: center;       
+    font-variant-numeric: tabular-nums;
+}
+
+.fecha {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.btn-fondo {
+    margin-top: 25px;
+    padding: 12px 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(0, 255, 204, 0.5);
+    border-radius: 50px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-fondo:hover {
+    background: rgba(0, 255, 204, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-fondo:active {
+    transform: translateY(0);
+}
