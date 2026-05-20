@@ -1,0 +1,107 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  background-color: #bae4ff;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #1e3a8a;
+  margin-bottom: 25px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #1e40af;
+}
+
+input[type="number"] {
+  padding: 10px 15px;
+  border: 2px solid #bfdbfe;
+  border-radius: 8px;
+  font-size: 20px;
+  color: #1e3a8a;
+  outline: none;
+  margin-bottom: 15px;
+  width: 100px;
+  text-align: center;
+}
+
+button {
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #1e40af; 
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+#soluciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 35px;
+  margin-top: 30px;
+}
+
+.tablero {
+  display: inline-block;
+  margin: 10px;
+  border: 5px solid #1e40af;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.fila {
+  display: flex;
+}
+
+
+.celda {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.celda {
+  background-color: #d4e7ff; /* Azul muy claro */
+}
+
+
+.tablero .fila:nth-child(odd) .celda:nth-child(even) {
+  background-color: #111a39;
+}
+
+.tablero .fila:nth-child(even) .celda:nth-child(odd) {
+  background-color: #111a39;
+}
+
+/* Estilo de la Reina */
+.reina {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.75em;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
