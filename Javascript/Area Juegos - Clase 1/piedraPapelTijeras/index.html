@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piedra, papel o tijera</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Jersey+10&display=swap");
+    </style>
+    <script src="juego.js" defer></script>
+  </head>
+
+  <body>
+    <div class="game-container">
+      <h1>Piedra, papel o tijera</h1>
+
+      <div class="opciones">
+        <button class="btn-opcion" data-eleccion="1">✊ Piedra</button>
+
+        <button class="btn-opcion" data-eleccion="2">✋ Papel</button>
+
+        <button class="btn-opcion" data-eleccion="3">✌️ Tijera</button>
+      </div>
+
+      <div class="resultado-container">
+        <p id="eleccion-jugador">Tu elección: -</p>
+        <p id="eleccion-pc">Elección PC: -</p>
+
+        <h2 id="resultado-final">¡Eligí una opción para empezar!</h2>
+      </div>
+
+      <button class="btn-reiniciar" id="btn-reiniciar">Reiniciar juego</button>
+    </div>
+  </body>
+</html>
