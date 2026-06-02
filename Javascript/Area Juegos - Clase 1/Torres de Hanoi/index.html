@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torres de Hanoi</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Torres de Hanoi</h1>
+        <p>
+            Mueve todos los discos desde la torre A hasta la torre C
+            respetando las reglas del juego.
+        </p>
+    </div>
+
+    <div class="panel">
+        <div class="info">
+            <span>Movimientos:</span>
+            <strong id="movimientos">0</strong>
+        </div>
+
+        <button id="reiniciar">
+            Reiniciar
+        </button>
+    </div>
+
+    <div class="torres">
+
+        <div class="torre-container">
+            <h2>A</h2>
+            <div class="torre" data-torre="0">
+                <div class="poste"></div>
+            </div>
+        </div>
+
+        <div class="torre-container">
+            <h2>B</h2>
+            <div class="torre" data-torre="1">
+                <div class="poste"></div>
+            </div>
+        </div>
+
+        <div class="torre-container">
+            <h2>C</h2>
+            <div class="torre" data-torre="2">
+                <div class="poste"></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
