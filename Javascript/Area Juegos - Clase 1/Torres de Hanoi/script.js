@@ -7,6 +7,7 @@ const estadoInicial = [
 let torres = JSON.parse(JSON.stringify(estadoInicial));
 let origen = null;
 let movimientos = 0;
+let resolviendo = false;
 
 const colores = [
     "#ef4444",
@@ -66,6 +67,8 @@ document.querySelectorAll(".torre").forEach(torre=>{
 
     torre.addEventListener("click",()=>{
 
+        if(resolviendo) return;
+
         const indice = Number(torre.dataset.torre);
 
         if(origen === null){
@@ -99,12 +102,72 @@ function verificarVictoria(){
     }
 }
 
+function generarMovimientos(n, origen, auxiliar, destino, pasos = []){
+
+    if(n === 1){
+
+        pasos.push([origen, destino]);
+
+        return pasos;
+    }
+
+    generarMovimientos(
+        n - 1,
+        origen,
+        destino,
+        auxiliar,
+        pasos
+    );
+
+    pasos.push([origen, destino]);
+
+    generarMovimientos(
+        n - 1,
+        auxiliar,
+        origen,
+        destino,
+        pasos
+    );
+
+    return pasos;
+}
+
+async function resolverAutomaticamente(){
+
+    if(resolviendo) return;
+
+    resolviendo = true;
+
+    const pasos = generarMovimientos(5,0,1,2);
+
+    for(const [o,d] of pasos){
+
+        moverDisco(o,d);
+
+        await new Promise(resolve =>
+            setTimeout(resolve,500)
+        );
+    }
+
+    resolviendo = false;
+}
+
+document.getElementById("auto")
+.addEventListener("click",()=>{
+
+    resolverAutomaticamente();
+
+});
+
 document.getElementById("reiniciar")
 .addEventListener("click",()=>{
 
     torres = JSON.parse(JSON.stringify(estadoInicial));
     movimientos = 0;
     origen = null;
+
+    document.querySelectorAll(".torre")
+        .forEach(t=>t.style.filter="none");
 
     renderizar();
 });
