@@ -49,4 +49,18 @@ public class Persona {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Persona{" +
+            "id=" + id +
+            ", nombre='" + nombre + '\'' +
+            ", tel='" + tel + '\'' +
+            ", email='" + email + '\'' +
+            '}';
+    }
+
+    public static void main(String[] args) {
+        Persona persona1 = new Persona("Juan Perez", "2617070701", "jperez@mail.com");
+        System.out.println(persona1);
+    }
 }
