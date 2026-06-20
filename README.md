@@ -1,6 +1,6 @@
 # Print("Estoy Cansado Jefe") 🐍☕🟨
 
-Repositorio con todo el contenido del Segundo Semestre.
+Repositorio con todo el contenido del Tercer Semestre.
 
 Acá fuimos subiendo, clase a clase, todo lo que practicamos en **Java**, **Python** y **JavaScript** durante el semestre. La idea de tener los tres lenguajes juntos es poder comparar cómo se ve el mismo concepto de POO (herencia, polimorfismo, clases abstractas, etc.) en cada uno, en vez de aprenderlos como cosas separadas.
 
