@@ -64,12 +64,12 @@ def iniciar_juego():
                 Puntuacion.mostrar_puntajes()
                 pausar()
             case "4":
-                limpiarpantalla()
+                limpiar_pantalla()
                 print("Saliendo del programa... ¡Adiós, caramba!")
                 break
-            case :
+            case _:
                 print("Opción no válida. Por favor, ingrese un número del 1 al 4.")
                 pausar()
 
-if name == "main":
+if __name__ == "__main__":
     iniciar_juego()
