@@ -38,3 +38,38 @@ class Puntuacion:
         print("               RANKING GLOBAL                     ")
         print("==================================================")
         print("[Conectando con la base de datos...]")
+        print("[Cargando tabla de posiciones desde la BD...]")
+        print("==================================================")
+
+def iniciar_juego():
+    while True:
+        limpiar_pantalla()
+        print("==============================")
+        print("         PYTHON D´OH!         ")
+        print("==============================")
+        print("1. JUGAR")
+        print("2. REGLAS")
+        print("3. PUNTAJES")
+        print("4. SALIR")
+        print("==============================")
+
+        opcion = input("Ingrese una opcion (1 al 4): ").strip()
+
+        match opcion:
+            case "1":
+                jugar()
+            case "2":
+                mostrar_reglas()
+            case "3":
+                Puntuacion.mostrar_puntajes()
+                pausar()
+            case "4":
+                limpiarpantalla()
+                print("Saliendo del programa... ¡Adiós, caramba!")
+                break
+            case :
+                print("Opción no válida. Por favor, ingrese un número del 1 al 4.")
+                pausar()
+
+if name == "main":
+    iniciar_juego()
