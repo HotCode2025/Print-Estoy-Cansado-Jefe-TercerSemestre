@@ -1,11 +1,15 @@
-USE simpsons_trivia;
+DROP TABLE IF EXISTS opciones;
+DROP TABLE IF EXISTS preguntas;
+DROP TABLE IF EXISTS ranking;
 
--- Insertar preguntas de ejemplo --
-INSERT INTO preguntas (texto, indice_correcto) VALUES
-('¿Cuántos miembros tiene la familia Simpson de forma principal?', 0),
-('¿Cómo se llama el dueño del minisuper (Kwik-E-Mart)?', 1);
+CREATE TABLE ranking (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre_jugador TEXT NOT NULL,
+    puntaje INTEGER NOT NULL DEFAULT 0,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
--- Insertar opciones/respuestas (asociadas por id de pregunta)
-INSERT INTO respuestas (pregunta_id, texto, es_correcta) VALUES
-(1, '5', TRUE), (1, '4', FALSE), (1, '7', FALSE),
-(2, 'Homero', FALSE), (2, 'Apu', TRUE), (2, 'Ned', FALSE);
+-- Datos de prueba para el ranking
+INSERT INTO ranking (nombre_jugador, puntaje) VALUES ('Bart', 10);
+INSERT INTO ranking (nombre_jugador, puntaje) VALUES ('Lisa', 100);
+INSERT INTO ranking (nombre_jugador, puntaje) VALUES ('Milhouse', 5);
