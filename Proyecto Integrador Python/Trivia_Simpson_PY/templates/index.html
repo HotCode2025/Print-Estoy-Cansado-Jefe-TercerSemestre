@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Simpson</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-simpson">
+
+<div class="glass-panel text-center">
+    <h1>Trivia Simpson</h1>
+    <p>¡Ingresa para jugar o continuar tu partida!</p>
+    
+    <form action="/login" method="POST" class="login-form">
+        <input type="text" name="username" placeholder="Nombre de usuario" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <button type="submit" class="btn btn-primary">Entrar / Registrarse</button>
+    </form>
+    
+    <p class="small-text">Si no tienes cuenta, se creará automáticamente.</p>
+</div>
+
+</body>
+</html>

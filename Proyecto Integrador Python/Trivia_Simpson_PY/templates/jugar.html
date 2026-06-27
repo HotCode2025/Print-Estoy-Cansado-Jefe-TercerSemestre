@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Simpson - Jugando</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-simpson">
+
+<div class="glass-panel text-center">
+    
+    <!-- Puntaje en la esquina -->
+    <div class="score-board">Puntaje: {{ puntaje }}</div>
+
+    {% if mensaje %}
+        <div class="alert">{{ mensaje }}</div>
+    {% endif %}
+
+    {% if terminado %}
+        <h1>¡Juego Terminado!</h1>
+        <p>Has respondido todas las preguntas.</p>
+        <p>Tu puntaje final es: <strong>{{ puntaje }}</strong></p>
+        <button onclick="window.location.href='/logout'" class="btn btn-secondary">Cerrar Sesión</button>
+    {% else %}
+        <h2>{{ pregunta.texto }}</h2>
+        
+        <form action="/jugar" method="POST" class="opciones-grid">
+            {% for i in range(pregunta.opciones|length) %}
+                <button type="submit" name="respuesta" value="{{ i }}" class="btn-opcion">
+                    {{ pregunta.opciones[i] }}
+                </button>
+            {% endfor %}
+        </form>
+
+        <form action="/jugar" method="POST" class="mt-4">
+            <button type="submit" name="guardar_salir" value="1" class="btn btn-secondary">Guardar Progreso y Salir</button>
+        </form>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
