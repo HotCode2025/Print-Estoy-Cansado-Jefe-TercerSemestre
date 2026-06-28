@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Subiste de Nivel!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-simpson">
+
+<div class="glass-panel text-center">
+    <h1>¡Nivel {{ nivel_anterior }} Superado! 🎉</h1>
+    <p style="color: rgb(0, 0, 0); font-size: 1.1rem; margin-bottom: 20px;">
+        Prepárate, las cosas se complican...
+    </p>
+    
+    <div class="alert" style="background: rgba(254, 217, 15, 0.2); border: 2px dashed var(--simpson-yellow);">
+        <h3 style="margin: 5px 0;">Siguiente Nivel: <strong>{{ siguiente_nivel }}</strong></h3>
+        <p style="margin: 5px 0; font-size: 14px; color: #333333;">¡Ahora cada pregunta vale <strong>{{ puntos }} puntos</strong>!</p>
+    </div>
+    
+    <form action="/level_up" method="POST" class="mt-4">
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 18px;">
+            Continuar Jugando
+        </button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='nubes.js') }}"></script>
+</body>
+</html>

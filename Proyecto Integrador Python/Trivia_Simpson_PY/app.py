@@ -6,6 +6,7 @@ app.secret_key = 'super_secret_key_simpsons' # Necesario para guardar la sesión
 
 # Nuestras preguntas en código
 preguntas = [
+    # --- NIVEL FÁCIL (10 PUNTOS) ---
     {
         'id': 0,
         'texto': '¿Cuántos miembros tiene la familia Simpson?',
@@ -41,6 +42,8 @@ preguntas = [
         'correcta': 1,  # Índice de la respuesta 'Selma Bouvier y Patty Bouvier'
         'puntos': 10
     },
+    
+    # --- NIVEL MEDIO (15 PUNTOS) ---
     {
         'id': 5,
         'texto': '¿Cómo se llaman los bravucones de la escuela de Lisa y Bart?',
@@ -76,6 +79,8 @@ preguntas = [
         'correcta': 1,  # Índice de la respuesta 'Mr. Burns'
         'puntos': 15
     },
+    
+    # --- NIVEL DIFÍCIL (20 PUNTOS) ---
     {
         'id': 10,
         'texto': 'Sin televisión y sin cerveza, Homero qué pierde?',
@@ -111,6 +116,8 @@ preguntas = [
         'correcta': 2,  # Índice de la respuesta '34'
         'puntos': 20
     },
+    
+    # --- NIVEL FAN (25 PUNTOS) ---
     {
         'id': 15,
         'texto': '¿En qué regimiento sirvió Abraham Simpson?',
@@ -146,10 +153,14 @@ preguntas = [
         'correcta': 0,  # Índice de la respuesta 'Captain Fantasy and the Soft-Touch Feelings + Bongo'
         'puntos': 25
     }
-
-
-    
 ]
+
+# Helper para calcular la dificultad según el índice
+def obtener_dificultad(pregunta_idx):
+    if pregunta_idx < 5: return "Fácil", 10
+    elif pregunta_idx < 10: return "Medio", 15
+    elif pregunta_idx < 15: return "Difícil", 20
+    else: return "Fan", 25
 
 def init_db():
     conn = sqlite3.connect('trivia.db')
@@ -210,6 +221,10 @@ def jugar():
     if 'usuario' not in session:
         return redirect(url_for('index'))
         
+    # Si el juego espera que el usuario vea la pantalla de nivel, lo redirigimos
+    if session.get('mostrando_nivel'):
+        return redirect(url_for('level_up'))
+
     conn = sqlite3.connect('trivia.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -218,6 +233,11 @@ def jugar():
     pregunta_idx = user['pregunta_actual']
     puntaje = user['puntaje']
     
+    # Comprobar si ya terminó antes de procesar nada
+    if pregunta_idx >= len(preguntas):
+        conn.close()
+        return render_template('jugar.html', terminado=True, puntaje=puntaje)
+
     # Procesar respuesta si viene por POST
     mensaje = None
     if request.method == 'POST':
@@ -242,13 +262,59 @@ def jugar():
                        (puntaje, pregunta_idx, session['usuario']))
         conn.commit()
 
+        # Activar pantalla de nivel si acaba de pasar los cortes (preguntas 5, 10 o 15)
+        if pregunta_idx in [5, 10, 15]:
+            session['mostrando_nivel'] = True
+            conn.close()
+            return redirect(url_for('level_up'))
+
     conn.close()
     
     # Comprobar si gano
     if pregunta_idx >= len(preguntas):
         return render_template('jugar.html', terminado=True, puntaje=puntaje)
         
-    return render_template('jugar.html', pregunta=preguntas[pregunta_idx], puntaje=puntaje, mensaje=mensaje, terminado=False)
+    nombre_dif, _ = obtener_dificultad(pregunta_idx)
+    
+    return render_template(
+        'jugar.html', 
+        pregunta=preguntas[pregunta_idx], 
+        puntaje=puntaje, 
+        mensaje=mensaje, 
+        terminado=False,
+        num_pregunta=pregunta_idx + 1,
+        total_preguntas=len(preguntas),
+        dificultad=nombre_dif
+    )
+
+@app.route('/level_up', methods=['GET', 'POST'])
+def level_up():
+    if 'usuario' not in session or not session.get('mostrando_nivel'):
+        return redirect(url_for('jugar'))
+        
+    conn = sqlite3.connect('trivia.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    user = cursor.execute('SELECT * FROM usuarios WHERE username = ?', (session['usuario'],)).fetchone()
+    pregunta_idx = user['pregunta_actual']
+    conn.close()
+
+    if request.method == 'POST':
+        session.pop('mostrando_nivel', None)
+        return redirect(url_for('jugar'))
+
+    # Obtener los datos del nuevo nivel al que va a ingresar
+    nombre_dif, puntos_dif = obtener_dificultad(pregunta_idx)
+    
+    # Nombre del nivel anterior para felicitarlo
+    nivel_anterior = "Fácil" if pregunta_idx == 5 else "Medio" if pregunta_idx == 10 else "Difícil"
+
+    return render_template(
+        'nivel.html', 
+        nivel_anterior=nivel_anterior, 
+        siguiente_nivel=nombre_dif, 
+        puntos=puntos_dif
+    )
 
 @app.route('/logout')
 def logout():

@@ -10,8 +10,13 @@
 
 <div class="glass-panel text-center">
     
-    <!-- Puntaje en la esquina -->
     <div class="score-board">Puntaje: {{ puntaje }}</div>
+
+    {% if not terminado %}
+        <div style="color: #333333; font-weight: 600; margin-bottom: 15px; font-size: 14px; letter-spacing: 0.5px;">
+            Nivel: <span style="color: var(--simpson-yellow);">{{ dificultad }}</span> | Pregunta: {{ num_pregunta }}/{{ total_preguntas }}
+        </div>
+    {% endif %}
 
     {% if mensaje %}
         <div class="alert">{{ mensaje }}</div>
