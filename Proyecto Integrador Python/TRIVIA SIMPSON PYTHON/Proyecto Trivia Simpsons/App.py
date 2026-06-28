@@ -1,9 +1,10 @@
 import os
 import sqlite3
-from flask import Flask, render_template
+from flask import Flask, render_template, session 
 from models.Pregunta import Pregunta
 
 app = Flask(__name__)
+app.secret_key = 'clave_secreta_super_oculta_de_los_simpson'
 
 def get_db_connection():
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +43,9 @@ def jugar(pregunta_id=None):
     conn.close()
     
     return render_template("jugar.html", pregunta=pregunta_obj, siguiente_id=siguiente_id)
-
+@app.route("/salir")
+def salir():
+    session.clear()
+    return render_template("despedida.html")
 if __name__ == "__main__":
     app.run(debug=True)
