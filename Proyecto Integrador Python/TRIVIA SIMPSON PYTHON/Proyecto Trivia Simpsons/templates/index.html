@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python D'oh!</title>
+    <title>Python D'oh! | Trivia Simpsons</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Josefin+Sans:ital,wght@0,550;1,550&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/favicon.png') }}">
 </head>
 
 <body>
@@ -74,7 +75,8 @@
         <div class="modal-content" style="text-align: center;">
             <span class="close-btn" onclick="cerrarModal('modal-jugar')">&times;</span>
             <div style="text-align: center;">
-                <img src="{{ url_for('static', filename='assets/partida.png') }}" alt="Nueva Partida" style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
+                <img src="{{ url_for('static', filename='assets/partida.png') }}" alt="Nueva Partida"
+                    style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
             </div>
             <form action="{{ url_for('registro') }}" method="POST" style="margin-top: 20px;">
                 <input type="text" name="nombre" placeholder="Ingresa tu nombre" required
@@ -90,7 +92,8 @@
         <div class="modal-content">
             <span class="close-btn" onclick="cerrarModal('modal-ranking')">&times;</span>
             <div style="text-align: center;">
-                <img src="{{ url_for('static', filename='assets/ranking.png') }}" alt="Ranking de Jugadores" style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
+                <img src="{{ url_for('static', filename='assets/ranking.png') }}" alt="Ranking de Jugadores"
+                    style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
             </div>
             <table
                 style="width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Josefin Sans', sans-serif;">
@@ -129,7 +132,8 @@
         <div class="modal-content" style="text-align: center;">
             <span class="close-btn" onclick="cerrarModal('modal-salir')">&times;</span>
             <div style="text-align: center;">
-                <img src="{{ url_for('static', filename='assets/salir.png') }}" alt="¡Gracias por jugar!" style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
+                <img src="{{ url_for('static', filename='assets/salir.png') }}" alt="¡Gracias por jugar!"
+                    style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
             </div>
             <p style="font-size: 20px; color: #333; margin: 20px 0;">Ya podés cerrar esta pestaña de forma segura.</p>
         </div>

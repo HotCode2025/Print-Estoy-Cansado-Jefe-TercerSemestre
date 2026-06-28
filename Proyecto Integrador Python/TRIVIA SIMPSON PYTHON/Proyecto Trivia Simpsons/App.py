@@ -62,9 +62,22 @@ def jugar(pregunta_id=None):
         pregunta_obj = Pregunta.mapear_desde_bd(fila_pregunta)
         
         if opcion_elegida == pregunta_obj.indice_correcto:
-            session['puntaje'] += 50
+            if pregunta_actual_id <= 5:
+                puntos = 50
+            elif pregunta_actual_id <= 10:
+                puntos = 100
+            elif pregunta_actual_id <= 15:
+                puntos = 150
+            else:
+                puntos = 200
+                
+            session['puntaje'] += puntos
             conn.execute("UPDATE ranking SET puntaje = ? WHERE id = ?", (session['puntaje'], session['jugador_id']))
             conn.commit()
+            
+            if pregunta_actual_id in [5, 10, 15]:
+                niveles = {5: "Medio", 10: "Difícil", 15: "Fan"}
+                flash(f"¡Subiste de Nivel! Ahora estás en nivel {niveles[pregunta_actual_id]}.", "levelup")
         else:
             session['vidas'] -= 1
             
