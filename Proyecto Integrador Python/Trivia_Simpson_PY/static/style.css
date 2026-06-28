@@ -19,6 +19,7 @@ body.bg-simpson {
     background-size: 200% 200%;
     animation: gradientBG 10s ease infinite;
     color: var(--text-dark);
+    overflow: hidden; /* Evita scroll por las nubes */
 }
 
 @keyframes gradientBG {
@@ -158,4 +159,41 @@ input:focus {
 
 .mt-4 {
     margin-top: 30px;
+}
+
+/* --- NUBES DE LOS SIMPSONS (prueba solamente) --- */
+.nube {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    background: #fff;
+    border-radius: 50px;
+    z-index: -1; /* Para que pasen por detras */
+    animation: moverNube linear infinite;
+}
+
+.nube::before, .nube::after {
+    content: '';
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.nube::before {
+    width: 70px;
+    height: 70px;
+    top: -30px;
+    left: 20px;
+}
+
+.nube::after {
+    width: 50px;
+    height: 50px;
+    top: -20px;
+    right: 20px;
+}
+
+@keyframes moverNube {
+    from { transform: translateX(-200px) scale(var(--scale)); }
+    to { transform: translateX(110vw) scale(var(--scale)); }
 }
