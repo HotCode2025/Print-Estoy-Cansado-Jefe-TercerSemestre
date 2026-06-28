@@ -15,7 +15,7 @@ CREATE TABLE preguntas (
 -- Tabla de ranking/partidas
 CREATE TABLE ranking (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre_jugador TEXT NOT NULL,
+    nombre_jugador TEXT NOT NULL UNIQUE,
     puntaje INTEGER NOT NULL DEFAULT 0,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 );

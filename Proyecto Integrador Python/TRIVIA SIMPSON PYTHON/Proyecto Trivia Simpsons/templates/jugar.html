@@ -4,28 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia Simpson - Jugar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Josefin+Sans:ital,wght@0,550;1,550&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
 <div class="menu">
     {% if pregunta %}
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; background: #fff; padding: 10px; border-radius: 5px; color: black;">
+            <span>Jugador: {{ session.get('jugador_nombre', 'Anónimo') }}</span>
+            <span>Vidas: {{ session.get('vidas', 3) }}</span>
+            <span>Puntaje: {{ session.get('puntaje', 0) }}</span>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <p style="color: {{ 'green' if category == 'success' else 'red' }}; background: white; padding: 5px; border-radius: 5px; margin-bottom: 10px;">{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
         <h2>{{ pregunta.texto }}</h2>
         
-        <div class="opciones">
-            <button class="btn-opcion">{{ pregunta.opcion1 }}</button>
-            <button class="btn-opcion">{{ pregunta.opcion2 }}</button>
-            <button class="btn-opcion">{{ pregunta.opcion3 }}</button>
-            <button class="btn-opcion">{{ pregunta.opcion4 }}</button>
-        </div>
-        
-        <br><br>
-        {% if siguiente_id is not none %}
-            <button onclick="window.location.href='{{ url_for('jugar', pregunta_id=siguiente_id) }}';">Siguiente Pregunta</button>
-        {% else %}
-            <button disabled>Juego Terminado</button>
-        {% endif %}
-    {% else %}
+        <form method="POST" action="{{ url_for('jugar') }}">
+            <input type="hidden" name="pregunta_id" value="{{ pregunta.id }}">
+            <div class="opciones">
+                <button type="submit" name="opcion" value="1" class="btn-opcion">{{ pregunta.opcion1 }}</button>
+                <button type="submit" name="opcion" value="2" class="btn-opcion">{{ pregunta.opcion2 }}</button>
+                <button type="submit" name="opcion" value="3" class="btn-opcion">{{ pregunta.opcion3 }}</button>
+                <button type="submit" name="opcion" value="4" class="btn-opcion">{{ pregunta.opcion4 }}</button>
+            </div>
+        </form>
         <h2>No hay más preguntas.</h2>
     {% endif %}
 

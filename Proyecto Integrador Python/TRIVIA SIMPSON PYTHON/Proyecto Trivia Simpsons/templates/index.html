@@ -1,22 +1,159 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python D'oh!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Josefin+Sans:ital,wght@0,550;1,550&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
-<div class="menu">
-    <h1>Los Sinson</h1>
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Trivia Los Simpsons">
+    </div>
 
-    <button onclick="window.location.href='{{ url_for('jugar') }}'">Jugar</button>
-    <button>Reglas</button>
-    <button>Ranking</button>
-    <button onclick="window.location.href='{{ url_for('salir') }}'">Salir</button>
-</div>
-    
+    <div class="menu">
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <p style="color: red; background: white; padding: 5px; border-radius: 5px;">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <button onclick="abrirModal('modal-jugar')">Jugar</button>
+        <button onclick="abrirModal('modal-reglas')">Reglas</button>
+        <button onclick="abrirModal('modal-ranking')">Ranking</button>
+        <button onclick="abrirModal('modal-salir')">Salir</button>
+    </div>
+
+    <!-- Modal de Reglas -->
+    <div id="modal-reglas" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarModal('modal-reglas')">&times;</span>
+            <div style="text-align: center;">
+                <img src="{{ url_for('static', filename='assets/reglas.png') }}" alt="Reglas del Juego"
+                    style="width: 100%; max-width: 400px; height: auto; border-radius: 10px; margin-bottom: 20px;">
+            </div>
+            <div class="reglas-texto">
+                <p>1. Tienes 3 vidas para completar un total de 20 preguntas.</p>
+                <p>2. Existen 4 niveles de dificultad: Fácil, Medio, Difícil y Fan.</p>
+                <p>3. Los puntos que obtienes por cada respuesta correcta dependen del nivel:</p>
+                <ul>
+                    <li>Fácil: 50 puntos</li>
+                    <li>Medio: 100 puntos</li>
+                    <li>Difícil: 150 puntos</li>
+                    <li>Fan: 200 puntos</li>
+                </ul>
+                <p>4. Por cada respuesta incorrecta, pierdes 1 vida. Si te quedas sin vidas, el juego termina.</p>
+                <p>5. ¡Demuestra que eres un verdadero fan de Los Simpsons!</p>
+            </div>
+            <div class="reglas-gif">
+                <div class="tenor-gif-embed" data-postid="4878723" data-share-method="host" data-aspect-ratio="1"
+                    data-width="100%"><a
+                        href="https://tenor.com/view/the-simpsons-lisa-simpson-ralph-wiggum-im-learnding-im-learning-gif-4878723">The
+                        Simpsons Lisa Simpson GIF</a>from <a href="https://tenor.com/search/the+simpsons-gifs">The
+                        Simpsons GIFs</a></div>
+                <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Jugar -->
+    <div id="modal-jugar" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-btn" onclick="cerrarModal('modal-jugar')">&times;</span>
+            <div style="text-align: center;">
+                <img src="{{ url_for('static', filename='assets/partida.png') }}" alt="Nueva Partida" style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
+            </div>
+            <form action="{{ url_for('registro') }}" method="POST" style="margin-top: 20px;">
+                <input type="text" name="nombre" placeholder="Ingresa tu nombre" required
+                    style="padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 15px; width: 80%; font-family: 'Josefin Sans', sans-serif;">
+                <button type="submit"
+                    style="width: 80%; padding: 15px; background: #ffcb1b; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; font-family: 'Josefin Sans', sans-serif;">Comenzar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Ranking -->
+    <div id="modal-ranking" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="cerrarModal('modal-ranking')">&times;</span>
+            <div style="text-align: center;">
+                <img src="{{ url_for('static', filename='assets/ranking.png') }}" alt="Ranking de Jugadores" style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
+            </div>
+            <table
+                style="width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Josefin Sans', sans-serif;">
+                <thead>
+                    <tr>
+                        <th style="padding: 10px; border: 1px solid #ddd; background-color: #fdd835; color: #333;">
+                            Posición</th>
+                        <th style="padding: 10px; border: 1px solid #ddd; background-color: #fdd835; color: #333;">
+                            Jugador</th>
+                        <th style="padding: 10px; border: 1px solid #ddd; background-color: #fdd835; color: #333;">
+                            Puntaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for jugador in jugadores %}
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">{{ loop.index }}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">{{ jugador.nombre_jugador
+                            }}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">{{ jugador.puntaje }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" style="padding: 10px; border: 1px solid #ddd; text-align: center;">Aún no hay
+                            jugadores en el ranking.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal de Salir -->
+    <div id="modal-salir" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-btn" onclick="cerrarModal('modal-salir')">&times;</span>
+            <div style="text-align: center;">
+                <img src="{{ url_for('static', filename='assets/salir.png') }}" alt="¡Gracias por jugar!" style="max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 10px;">
+            </div>
+            <p style="font-size: 20px; color: #333; margin: 20px 0;">Ya podés cerrar esta pestaña de forma segura.</p>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal(id) {
+            document.getElementById(id).classList.add('show');
+            if (id === 'modal-salir') {
+                fetch('{{ url_for("salir") }}', { method: 'POST' });
+            }
+        }
+        function cerrarModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        // Cerrar al hacer clic fuera del modal
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
+            }
+        }
+    </script>
+
 </body>
+
 </html>
