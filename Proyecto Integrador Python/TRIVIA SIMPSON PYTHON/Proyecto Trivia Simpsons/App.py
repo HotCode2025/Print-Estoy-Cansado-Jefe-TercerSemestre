@@ -96,12 +96,16 @@ def jugar(pregunta_id=None):
                 flash(f"¡Subiste de Nivel! Ahora estás en nivel {niveles[pregunta_actual_id]}.", "levelup")
         else:
             session['vidas'] -= 1
+            flash("¡D'oh! Respuesta incorrecta. Pierdes una rosquilla.", "doh")
             
         if session['vidas'] <= 0:
             conn.close()
             puntaje_final = session.get('puntaje', 0)
             session.clear()
-            flash(f"¡Te quedaste sin vidas! Tu puntaje final fue {puntaje_final}.", "error")
+            if puntaje_final == 0:
+                flash(f"¡Te quedaste sin vidas! Tu puntaje final fue {puntaje_final}.", "fah")
+            else:
+                flash(f"¡Te quedaste sin vidas! Tu puntaje final fue {puntaje_final}.", "error")
             return redirect(url_for('inicio'))
             
         siguiente_registro = conn.execute("SELECT id FROM preguntas WHERE id > ? ORDER BY id ASC LIMIT 1", (pregunta_actual_id,)).fetchone()
@@ -112,7 +116,7 @@ def jugar(pregunta_id=None):
             conn.close()
             puntaje_final = session.get('puntaje', 0)
             session.clear()
-            flash(f"¡Completaste todas las preguntas! Tu puntaje final fue {puntaje_final}.", "success")
+            flash(f"¡Completaste todas las preguntas! Tu puntaje final fue {puntaje_final}.", "woohoo")
             return redirect(url_for('inicio'))
 
     if pregunta_id is None:

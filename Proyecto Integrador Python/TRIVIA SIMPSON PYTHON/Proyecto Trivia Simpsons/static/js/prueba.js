@@ -2,6 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // rosquillas cada 600ms
     setInterval(crearRosquilla, 600);
 
+    // musica de fondo
+    const bgMusic = document.getElementById("bg-music");
+    if (bgMusic) {
+        bgMusic.volume = 0.04;
+        let playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // autoplay bloqueado
+                const iniciarMusica = () => {
+                    bgMusic.play();
+                    document.removeEventListener("click", iniciarMusica);
+                };
+                document.addEventListener("click", iniciarMusica);
+            });
+        }
+    }
+
     function crearRosquilla() {
         const rosquilla = document.createElement("div");
         rosquilla.innerText = "🍩"; 

@@ -56,6 +56,9 @@
       {% else %}
       <p style="color: {{ 'green' if category == 'success' else 'red' }}; background: white; padding: 5px; border-radius: 5px; margin-bottom: 10px;">
         {{ message }}</p>
+        {% if category == 'doh' %}
+        <audio autoplay><source src="{{ url_for('static', filename='assets/doh.mp3') }}" type="audio/mpeg"></audio>
+        {% endif %}
       {% endif %}
       {% endfor %}
     </div>
@@ -120,6 +123,9 @@
     const intervalo = setInterval(actualizarCronometro, 1000);
   </script>
 
+    <audio id="bg-music" loop>
+      <source src="{{ url_for('static', filename='assets/MainTitleTheme.mp3') }}" type="audio/mpeg">
+    </audio>
 </body>
 
 </html>

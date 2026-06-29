@@ -103,17 +103,21 @@ textarea {
     width: 100%;
     padding: 15px;
     margin: 10px 0;
-    background: #ffcb1b;
-    border: none;
-    border-radius: 10px;
+    background: #FED42D;
+    color: #1e1e1e;
+    border: 3px solid #000;
+    border-radius: 12px;
     font-size: 18px;
-    cursor: pointer;
+    font-weight: 800;
+    box-shadow: 5px 5px 0px #000; 
+    transition: all 0.1s ease-in-out;
 }
 
 .menu button:hover {
-    background: #fff176;
-    color: black;
-    font-weight: bold;
+    background: #FF69B4;
+    color: #fff;
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0px #000;
 }
 
 /* Modal de Reglas */

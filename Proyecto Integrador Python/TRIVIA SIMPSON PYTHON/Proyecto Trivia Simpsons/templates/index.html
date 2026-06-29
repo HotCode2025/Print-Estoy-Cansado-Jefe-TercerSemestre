@@ -22,11 +22,18 @@
 
     <div class="menu">
 
-        {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <div class="flash-messages">
-            {% for message in messages %}
+            {% for category, message in messages %}
             <p style="color: red; background: white; padding: 5px; border-radius: 5px;">{{ message }}</p>
+            
+            {% if category == 'woohoo' %}
+            <audio autoplay><source src="{{ url_for('static', filename='assets/woo-hoo-homer-simpson.mp3') }}" type="audio/mpeg"></audio>
+            {% elif category == 'fah' %}
+            <audio autoplay><source src="{{ url_for('static', filename='assets/fah.mp3') }}" type="audio/mpeg"></audio>
+            {% endif %}
+
             {% endfor %}
         </div>
         {% endif %}
@@ -158,6 +165,9 @@
         }
     </script>
 
+    <audio id="bg-music" loop>
+        <source src="{{ url_for('static', filename='assets/MainTitleTheme.mp3') }}" type="audio/mpeg">
+    </audio>
     <script src="{{ url_for('static', filename='js/prueba.js') }}"></script>
 </body>
 
