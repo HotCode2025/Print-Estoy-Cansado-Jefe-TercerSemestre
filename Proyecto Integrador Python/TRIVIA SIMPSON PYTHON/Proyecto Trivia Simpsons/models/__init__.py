@@ -1,11 +1,10 @@
-from models import Pregunta, Partida
+from .Pregunta import Pregunta
+from .Partida import Partida
 
 """
-Módulo de modelos de datos (solo inicializacion)
+Módulo de modelos de datos
 
-Contiene las clases que representan las entidades del dominio:
+Contiene las siguientes entidades:
 - Pregunta: Representa una pregunta con opciones
-- Partida: Representa una partida jugada por un usuario
-- A actualizar a futuro
+- Partida: Representa el resultado de una partida jugada por un usuario (solo puntaje)
 """
-

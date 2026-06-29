@@ -1,7 +1,8 @@
 import os
 import sqlite3
 from flask import Flask, render_template, session, request, redirect, url_for, flash
-from models.Pregunta import Pregunta
+from models import Pregunta, Partida
+
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_super_oculta_de_los_simpson'
@@ -16,8 +17,9 @@ def get_db_connection():
 @app.route("/")
 def inicio():
     conn = get_db_connection()
-    top_jugadores = conn.execute("SELECT nombre_jugador, puntaje FROM ranking ORDER BY puntaje DESC LIMIT 10").fetchall()
+    top_jugadores = conn.execute("SELECT id, nombre_jugador, puntaje FROM ranking ORDER BY puntaje DESC LIMIT 10").fetchall()
     conn.close()
+    top_jugadores = [Partida.mapear_desde_bd(jugador) for jugador in top_jugadores]
     return render_template("index.html", jugadores=top_jugadores)
 
 @app.route("/registro", methods=["POST"])

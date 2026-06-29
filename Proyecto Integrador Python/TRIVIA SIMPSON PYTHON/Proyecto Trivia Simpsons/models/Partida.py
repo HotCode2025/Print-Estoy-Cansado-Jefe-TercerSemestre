@@ -1,10 +1,18 @@
 #clase Partida, usamos dataclass para optimizar el codigo migrado desde Java
 from dataclasses import dataclass
-from datetime import datetime
+from sqlite3 import Row
 
 @dataclass
 class Partida:
     id: int | None
     nombre_jugador: str
-    puntaje_obtenido: int
-    fecha: datetime
+    puntaje: int
+
+    @staticmethod
+    def mapear_desde_bd(row: Row):
+        return Partida(
+            id=row["id"],
+            nombre_jugador=row["nombre_jugador"],
+            puntaje=row["puntaje"]
+        )
+    
