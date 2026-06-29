@@ -16,6 +16,26 @@
 
 <body>
 
+  <!-- CRONÓMETRO -->
+  <div id="cronometro" style="
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 220, 0, 0.95);
+      color: #1e1e1e;
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-family: 'Arial Black', sans-serif;
+      font-size: 22px;
+      font-weight: bold;
+      z-index: 9999;
+      border: 3px solid #ff6600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  ">
+      ⏱ <span id="tiempo-display">10:00</span>
+  </div>
+
   <div class="menu">
     {% if pregunta %}
     <div
@@ -64,6 +84,45 @@
     <br><br>
     <button onclick="window.location.href='{{ url_for('inicio') }}';">Volver al Inicio</button>
   </div>
+
+  <script>
+    const LIMITE = "{{ tiempo_restante }}";
+    let inicio = Date.now();
+
+    function formatear(segundos) {
+      const mins = Math.floor(segundos / 60);
+      const segs = Math.floor(segundos % 60);
+      return `${String(mins).padStart(2,'0')}:${String(segs).padStart(2,'0')}`;
+    }
+
+    function actualizarCronometro() {
+      const restante = LIMITE - (Date.now() - inicio) / 1000;
+      const display = document.getElementById('tiempo-display');
+      const caja = document.getElementById('cronometro');
+
+      if (restante <= 0) {
+        display.textContent = '00:00';
+        clearInterval(intervalo);
+        caja.style.background = '#ff0000';
+        caja.style.color = '#ffffff';
+        caja.style.borderColor = '#cc0000';
+        setTimeout(() => {
+          window.location.href = "{{ url_for('inicio') }}";
+        }, 1500);
+        return;
+      }
+
+      if (restante <= 30) {
+        caja.style.background = '#ff6600';
+        caja.style.color = '#ffffff';
+        caja.style.borderColor = '#cc3300';
+      }
+
+      display.textContent = formatear(restante);
+    }
+
+    const intervalo = setInterval(actualizarCronometro, 1000);
+  </script>
 
 </body>
 

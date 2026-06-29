@@ -1,11 +1,14 @@
 import os
 import sqlite3
+import time
 from flask import Flask, render_template, session, request, redirect, url_for, flash
 from models import Pregunta, Partida
 
 
 app = Flask(__name__)
 app.secret_key = 'clave_secreta_super_oculta_de_los_simpson'
+
+LIMITE_TIEMPO = 600  # 10 minutos
 
 def get_db_connection():
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,6 +41,7 @@ def registro():
         session['jugador_nombre'] = nombre
         session['puntaje'] = 0
         session['vidas'] = 3
+        session['tiempo_inicio'] = time.time()  # Arranca el cronómetro al registrarse
     except sqlite3.IntegrityError:
         flash("Ese nombre ya está en uso. Por favor, elige otro.")
         return redirect(url_for('inicio'))
@@ -53,6 +57,16 @@ def jugar(pregunta_id=None):
     if 'jugador_id' not in session:
         flash("Debes registrarte antes de jugar.")
         return redirect(url_for('inicio'))
+
+    # Chequea si se acabó el tiempo
+    tiempo_inicio = session.get('tiempo_inicio')
+    if tiempo_inicio:
+        transcurrido = time.time() - tiempo_inicio
+        if transcurrido >= LIMITE_TIEMPO:
+            puntaje_final = session.get('puntaje', 0)
+            session.clear()
+            flash(f"¡Se acabó el tiempo! Tu puntaje final fue {puntaje_final}.", "error")
+            return redirect(url_for('inicio'))
 
     conn = get_db_connection()
     
@@ -116,11 +130,17 @@ def jugar(pregunta_id=None):
     siguiente_id = siguiente_registro['id'] if siguiente_registro else None
 
     conn.close()
+
+    # Calcula el tiempo restante para pasarlo al HTML
+    transcurrido = time.time() - session.get('tiempo_inicio', time.time())
+    tiempo_restante = max(0, LIMITE_TIEMPO - transcurrido)
     
-    return render_template("jugar.html", pregunta=pregunta_obj, siguiente_id=siguiente_id)
+    return render_template("jugar.html", pregunta=pregunta_obj, siguiente_id=siguiente_id, tiempo_restante=int(tiempo_restante))
+
 @app.route("/salir", methods=["POST"])
 def salir():
     session.clear()
     return "OK", 200
+
 if __name__ == "__main__":
     app.run(debug=True)
