@@ -21,7 +21,12 @@
     <div
       style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; background: #fff; padding: 10px; border-radius: 5px; color: black;">
       <span>Jugador: {{ session.get('jugador_nombre', 'Anónimo') }}</span>
-      <span>Vidas: {{ session.get('vidas', 3) }}</span>
+      <span class="vidas-contenedor">
+    Vidas:
+    <img src="{{ url_for('static', filename='assets/favicon.png') }}" class="rosquilla-vida {% if session.get('vidas', 3) < 1 %}comida{% endif %}" alt="Rosquilla 1">
+    <img src="{{ url_for('static', filename='assets/favicon.png') }}" class="rosquilla-vida {% if session.get('vidas', 3) < 2 %}comida{% endif %}" alt="Rosquilla 2">
+    <img src="{{ url_for('static', filename='assets/favicon.png') }}" class="rosquilla-vida {% if session.get('vidas', 3) < 3 %}comida{% endif %}" alt="Rosquilla 3">
+</span>
       <span>Puntaje: {{ session.get('puntaje', 0) }}</span>
     </div>
 
